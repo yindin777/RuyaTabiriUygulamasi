@@ -3,22 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dream Interpreter</title>
+    <title>Dream Interpretation AI</title>
+    <!-- Link to Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom Styles -->
+    <style>
+        .radio-container {
+            display: flex;
+            align-items: center;
+        }
+        .radio-container input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+        .interpretation-area {
+             white-space: pre-line; /* Allows for line breaks in the interpretation */
+        }
+    </style>
 </head>
-<body class="bg-gray-100 p-4">
-    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold mb-4">Dream Interpreter</h1>
-        <textarea id="dreamInput" class="w-full h-32 p-2 border rounded mb-4" placeholder="Describe your dream..."></textarea>
-        <button id="interpretButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Interpret
-        </button>
-        <div id="interpretationOutput" class="mt-4 p-2 border rounded">
-            <!-- Interpretation will be displayed here -->
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-2xl">
+        <!-- Header -->
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Dream Interpretation AI</h1>
+        <!-- Dream Input Form -->
+        <form id="dreamForm" class="mb-6">
+            <div class="mb-4">
+                <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2">Enter your dream keyword:</label>
+                <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., flying, water, snake" required>
+            </div>
+            <!-- Interpretation Style Selection -->
+            <div class="mb-4">
+                <p class="block text-gray-700 text-sm font-bold mb-2">Choose Interpretation Style:</p>
+                <div class="radio-container">
+                    <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
+                    <label for="religiousRadio" class="text-gray-700 text-sm">Religious/Historical</label>
+                </div>
+                <div class="radio-container">
+                    <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
+                    <label for="lifestyleRadio" class="text-gray-700 text-sm">Lifestyle-based</label>
+                </div>
+            </div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Interpret Dream
+            </button>
+        </form>
+        <!-- Interpretation Display Area -->
+        <div id="interpretationResult" class="mt-6">
+            <h2 class="text-xl font-semibold mb-2 text-gray-800">Interpretation:</h2>
+            <div id="interpretationText" class="interpretation-area text-gray-700">
+                <!-- Interpretation will be displayed here -->
+            </div>
         </div>
     </div>
+    <!-- JavaScript Code -->
     <script>
-        // JavaScript code will go here
+        // Function to handle form submission
+        document.getElementById('dreamForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const keyword = document.getElementById('dreamKeyword').value;
+            const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
+            document.getElementById('interpretationText').textContent = "Loading...";
+            try {
+                const response = await fetch('/api/interpret', { // Using /api/interpret endpoint
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle })
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                //Update the interpretation result
+                document.getElementById('interpretationText').textContent = data.interpretation;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('interpretationText').textContent = "Error fetching the dream interpretation.";
+            }
+        });
     </script>
 </body>
 </html>
