@@ -167,6 +167,7 @@
               <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.</p>
               <div id="interpretationText" class="interpretation-area">
                 <!-- Interpretation will be displayed here -->
+                <p id="welcomeMessage" class="ai-message"></p>
              </div>
           </div>
          <div class="chat-input-container">
@@ -200,6 +201,13 @@
                    "interpretButton": "Rüyayı Yorumla",
                   "interpretationHeader": "Yorum:",
                      "interpretationDisclaimer": "Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.",
+                      "welcomeMessage": `Selam,
+Ben bir yapay zeka yardımcısıyım;
+İslami rüya tabirleri kaynaklarını hızlı
+biçimde sizin gördüğünüz rüyalara
+uyan tabirleri kaynakları ile sıralamakla
+memurum.
+İnşaAllah hayırlara vesile olur...`,
               },
                en: {
                     "RüyAi": "RüyAi",
@@ -212,6 +220,10 @@
                      "interpretButton": "Interpret Dream",
                     "interpretationHeader": "Interpretation:",
                     "interpretationDisclaimer": "This interpretation uses reputable sources in Islamic literature.",
+                       "welcomeMessage": `Hello,
+I am an artificial intelligence assistant;
+I am tasked with quickly presenting you with interpretations from Islamic dream interpretation sources that match the dreams you have seen.
+God willing, it will lead to good things...`,
                },
                 fr: {
                     "RüyAi": "RüyAi",
@@ -224,6 +236,10 @@
                     "interpretButton": "Interpréter le Rêve",
                     "interpretationHeader": "Interprétation:",
                      "interpretationDisclaimer": "Cette interprétation utilise des sources réputées de la littérature islamique.",
+                       "welcomeMessage": `Bonjour,
+Je suis un assistant d'intelligence artificielle;
+Je suis chargé de vous présenter rapidement des interprétations provenant de sources d'interprétation des rêves islamiques qui correspondent aux rêves que vous avez vus.
+Si Dieu le veut, cela mènera à de bonnes choses...`,
               },
                ar: {
                      "RüyAi": "رؤياي",
@@ -236,6 +252,10 @@
                       "interpretButton": "تفسير الحلم",
                      "interpretationHeader": "التفسير:",
                       "interpretationDisclaimer": "يستخدم هذا التفسير مصادر موثوقة في الأدب الإسلامي.",
+                       "welcomeMessage": `مرحبا،
+أنا مساعد ذكاء اصطناعي؛
+أنا مكلف بأن أقدم لك بسرعة تفسيرات من مصادر تفسير الأحلام الإسلامية التي تتطابق مع الأحلام التي رأيتها.
+إن شاء الله، سيؤدي ذلك إلى أشياء جيدة...`,
                }
          };
             // Function to apply the language on ui elements
@@ -248,6 +268,8 @@
                          element.textContent = translations[currentLanguage][key];
                     }
                });
+             const welcomeMessage = translations[currentLanguage]["welcomeMessage"];
+               document.getElementById('welcomeMessage').textContent = welcomeMessage;
            }
         applyTranslations();
           // Function to handle form submission
@@ -338,4 +360,4 @@
      });
  </script>
 </body>
-                      </html>
+</html>
