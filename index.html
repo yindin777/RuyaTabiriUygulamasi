@@ -8,181 +8,175 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
     <style>
-       body {
-           background-image: url('https://storage.googleapis.com/bard-storage/images/f72ab7c13b2548b4a8719f7082594492.png'); /* Replace with your image URL */
-          background-size: cover;
-            background-position: center;
-          background-repeat: no-repeat;
-           min-height: 100vh;
-          display: flex;
-            flex-direction: column;
+          body {
+            font-family: sans-serif;
+            background-color: #f0f0f0;
             margin: 0;
-           position: relative;
-        }
-       .header-container {
-           position: absolute;
-           top: 0;
-           left: 0;
-            width: 100%;
-           background-color: rgba(0,0,0,0.4)
-         }
-       .radio-container {
             display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header-container {
+            background-color: #3490dc;
+            padding: 1rem 0;
+            text-align: center;
+            color: white;
+         }
+         .content-container {
+             flex: 1;
+              display: flex;
+             flex-direction: column;
+             align-items: center;
+            justify-content: flex-start;
+              padding: 2rem;
+        }
+       .main-content {
+              background-color: white;
+              padding: 2rem;
+              border-radius: 0.5rem;
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+              max-width: 600px;
+            width: 100%;
+        }
+         .radio-container {
+              display: flex;
             align-items: center;
-        }
-       .radio-container input[type="radio"] {
+             margin-bottom: 0.5rem;
+          }
+        .radio-container input[type="radio"] {
             margin-right: 0.5rem;
-       }
-       .interpretation-area {
-            white-space: pre-line;
         }
+         .chat-input-container {
+              margin-top: 1rem;
+            display: flex;
+            width: 100%;
+       }
+        .chat-input-container input {
+          flex: 1;
+             padding: 0.75rem;
+              border: 1px solid #ccc;
+              border-radius: 0.25rem;
+          margin-right: 0.5rem;
+       }
+       .interpret-button {
+          background-color: #3490dc;
+           color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+           border-radius: 0.25rem;
+           cursor: pointer;
+            display: block;
+            margin-top: 1rem;
+        }
+          .interpret-button:hover {
+            background-color: #2779bd;
+       }
        .loading-spinner {
-           border: 4px solid rgba(0, 0, 0, 0.1);
-          border-top: 4px solid #3498db;
-           border-radius: 50%;
+            border: 4px solid rgba(0, 0, 0, 0.1);
+           border-top: 4px solid #3498db;
+            border-radius: 50%;
           width: 20px;
-            height: 20px;
+           height: 20px;
             animation: spin 1s linear infinite;
            display: none;
        }
-       @keyframes spin {
-         0% { transform: rotate(0deg); }
-         100% { transform: rotate(360deg); }
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
-       .tooltip {
+       .interpretation-area {
+            white-space: pre-line;
+         margin-top: 1rem;
+        }
+         .user-message {
+            text-align: right;
+             color: black
+           margin-bottom: 0.5rem;
+        }
+        .ai-message {
+           text-align: left;
+           margin-bottom: 0.5rem;
+            color: #4B5563;
+        }
+        .tooltip {
             position: relative;
             display: inline-block;
           cursor: help;
-       }
+        }
        .tooltip .tooltiptext {
          visibility: hidden;
-           width: 200px;
-          background-color: #555;
-           color: #fff;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
            text-align: center;
-          padding: 5px;
-           border-radius: 6px;
+            padding: 5px;
+             border-radius: 6px;
             position: absolute;
            z-index: 1;
-           bottom: 125%;
-          left: 50%;
-           margin-left: -100px;
-         opacity: 0;
+            bottom: 125%;
+             left: 50%;
+             margin-left: -100px;
+          opacity: 0;
             transition: opacity 0.3s;
-      }
-     .tooltip:hover .tooltiptext {
-          visibility: visible;
+       }
+      .tooltip:hover .tooltiptext {
+           visibility: visible;
             opacity: 1;
        }
-      .content-container {
-            display: flex;
-          flex-direction: column;
-         align-items: center;
-           justify-content: flex-start;
-         min-height: calc(100vh - 4rem);
-          padding: 4rem 0;
-      }
-      .main-content {
-            background-color: rgba(255, 255, 255, 0.85);
-           padding: 2rem;
-           border-radius: 1rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          max-width: 100%;
-      }
-        .chat-container {
-            display: flex;
-           flex-direction: column;
-           margin-top: 1rem;
-       }
-        .chat-bubble {
-           background-color: #e0e0e0;
-           padding: 0.75rem;
-           border-radius: 0.5rem;
-           margin-bottom: 0.5rem;
-          max-width: 80%;
-        }
-        .chat-bubble.user {
-          align-self: flex-end;
-            background-color: #dcf8c6;
-      }
-      .chat-input-container {
-            display: flex;
-          margin-top: 1rem;
-        }
-        .chat-input-container input {
-           flex: 1;
-            padding: 0.75rem;
-          border: 1px solid #ccc;
-            border-radius: 0.5rem;
-           margin-right: 0.5rem;
-        }
-        .user-message {
-            text-align: right;
-         color: black
-         margin-bottom: 0.5rem;
-      }
-    .ai-message {
-         text-align: left;
-           margin-bottom: 0.5rem;
-         color: #4B5563;
-     }
-  </style>
+    </style>
 </head>
-<body class="bg-gray-100 relative">
- <div class="header-container p-2 text-white">
-     <div class="container mx-auto flex justify-center items-center">
-       <h1 class="text-2xl font-bold text-center text-black">RüyAi</h1>
-      </div>
-  </div>
-   <div class="content-container">
-       <div class="main-content rounded-lg w-full max-w-3xl">
-            <!-- Dream Input Form -->
-        <div class="flex items-center justify-between mb-4">
-             <select id="language-select" class="bg-gray-700 text-white rounded-lg">
-                <option value="tr">Türkçe</option>
-                <option value="en">English</option>
-                <option value="fr">Français</option>
-                <option value="ar">العربية</option>
-             </select>
-         </div>
-           <!-- Interpretation Style Selection -->
-           <div class="mb-4">
-              <div class="radio-container">
-                  <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
+<body>
+    <div class="header-container">
+      <h1 class="text-2xl font-bold">RüyAi</h1>
+    </div>
+    <div class="content-container">
+        <div class="main-content">
+            <div class="flex items-center justify-between mb-4">
+                <select id="language-select" class="bg-gray-700 text-white rounded-lg">
+                   <option value="tr">Türkçe</option>
+                   <option value="en">English</option>
+                    <option value="fr">Français</option>
+                  <option value="ar">العربية</option>
+               </select>
+            </div>
+                <div class="mb-4">
+                  <div class="radio-container">
+                     <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
                     <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
                         Dini/Tarihsel
-                     <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
+                         <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
                    </label>
-                </div>
-                 <div class="radio-container">
-                     <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
-                    <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
+                   </div>
+                  <div class="radio-container">
+                    <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
+                     <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
                          Yaşam Tarzına Dayalı
-                       <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
-                  </label>
+                        <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
+                    </label>
+                    </div>
                </div>
-           </div>
-          <div id="interpretationResult" class="mt-6">
-              <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
-              <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.</p>
-              <div id="interpretationText" class="interpretation-area">
-                <!-- Interpretation will be displayed here -->
-                <p id="welcomeMessage" class="ai-message"></p>
-             </div>
-          </div>
-         <div class="chat-input-container">
-             <input type="text" id="chatInput" placeholder="Sorunuzu girin..." />
-               <button id="sendChat" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Gönder</button>
-               <button id="startRecording" type="button" class="p-2 focus:outline-none">
+           <div id="interpretationResult" class="mt-6">
+               <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
+                <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.</p>
+                <div id="interpretationText" class="interpretation-area">
+                 <!-- Interpretation will be displayed here -->
+                    <p id="welcomeMessage" class="ai-message"></p>
+                </div>
+            </div>
+           <div class="chat-input-container">
+              <input type="text" id="chatInput" placeholder="Sorunuzu girin..." />
+                <button id="sendChat" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Gönder</button>
+                 <button id="startRecording" type="button" class="p-2 focus:outline-none">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75-3h7.5m-7.5 3.75a1.5 1.5 0 01-1.5-1.5m1.5 1.5h1.5m-1.5 1.5a1.5 1.5 0 001.5-1.5m-3.75-6.75h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008zm0 3h.008v.008h-.008v-.008z" />
                     </svg>
-              </button>
-             <div id="loadingIndicator" class="loading-spinner"></div>
-         </div>
-      </div>
-  </div>
-    <!-- JavaScript Code -->
+                 </button>
+              <div id="loadingIndicator" class="loading-spinner"></div>
+          </div>
+        </div>
+    </div>
+
+     <!-- JavaScript Code -->
  <script>
        document.addEventListener('DOMContentLoaded', function() {
             const languageSelect = document.getElementById('language-select');
@@ -268,7 +262,7 @@ Si Dieu le veut, cela mènera à de bonnes choses...`,
                          element.textContent = translations[currentLanguage][key];
                     }
                });
-             const welcomeMessage = translations[currentLanguage]["welcomeMessage"];
+            const welcomeMessage = translations[currentLanguage]["welcomeMessage"];
                document.getElementById('welcomeMessage').textContent = welcomeMessage;
            }
         applyTranslations();
