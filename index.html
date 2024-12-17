@@ -9,10 +9,10 @@
     <!-- Custom Styles -->
     <style>
        body {
-           background-image: url('https://images.unsplash.com/photo-1531342542938-33442059160a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); /* Replace with your image URL */
+           background-image: url('https://storage.googleapis.com/bard-storage/images/f72ab7c13b2548b4a8719f7082594492.png'); /* Replace with your image URL */
           background-size: cover;
-          background-position: center;
-           background-repeat: no-repeat;
+           background-position: center;
+          background-repeat: no-repeat;
             min-height: 100vh;
            display: flex;
             flex-direction: column;
@@ -23,262 +23,316 @@
            position: absolute;
             top: 0;
             left: 0;
-           width: 100%;
+            width: 100%;
            background-color: rgba(0,0,0,0.4)
           }
         .radio-container {
            display: flex;
-            align-items: center;
-         }
+           align-items: center;
+        }
          .radio-container input[type="radio"] {
            margin-right: 0.5rem;
-         }
-        .interpretation-area {
-            white-space: pre-line;
           }
+       .interpretation-area {
+            white-space: pre-line;
+       }
         .loading-spinner {
-           border: 4px solid rgba(0, 0, 0, 0.1);
-            border-top: 4px solid #3498db;
+          border: 4px solid rgba(0, 0, 0, 0.1);
+          border-top: 4px solid #3498db;
             border-radius: 50%;
            width: 20px;
-           height: 20px;
-            animation: spin 1s linear infinite;
-             display: none;
-        }
-       @keyframes spin {
-            0% { transform: rotate(0deg); }
-           100% { transform: rotate(360deg); }
+          height: 20px;
+          animation: spin 1s linear infinite;
+            display: none;
        }
+       @keyframes spin {
+          0% { transform: rotate(0deg); }
+           100% { transform: rotate(360deg); }
+      }
        .tooltip {
-            position: relative;
-            display: inline-block;
-             cursor: help;
-        }
-        .tooltip .tooltiptext {
+           position: relative;
+          display: inline-block;
+           cursor: help;
+      }
+      .tooltip .tooltiptext {
            visibility: hidden;
-           width: 200px;
-           background-color: #555;
+            width: 200px;
+            background-color: #555;
             color: #fff;
             text-align: center;
             padding: 5px;
             border-radius: 6px;
            position: absolute;
-            z-index: 1;
-             bottom: 125%;
-             left: 50%;
+           z-index: 1;
+           bottom: 125%;
+            left: 50%;
             margin-left: -100px;
-           opacity: 0;
+            opacity: 0;
            transition: opacity 0.3s;
-        }
-      .tooltip:hover .tooltiptext {
-            visibility: visible;
-           opacity: 1;
       }
+        .tooltip:hover .tooltiptext {
+          visibility: visible;
+           opacity: 1;
+       }
       .content-container {
-           display: flex;
-           flex-direction: column;
+            display: flex;
+          flex-direction: column;
            align-items: center;
            justify-content: flex-start;
-           min-height: calc(100vh - 4rem);
+          min-height: calc(100vh - 4rem);
            padding: 4rem 0;
-       }
-       .main-content {
+      }
+      .main-content {
             background-color: rgba(255, 255, 255, 0.85);
-           padding: 2rem;
+          padding: 2rem;
            border-radius: 1rem;
-           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           max-width: 100%;
       }
      .chat-container {
-         display: flex;
-          flex-direction: column;
-          margin-top: 1rem;
-        }
+            display: flex;
+           flex-direction: column;
+            margin-top: 1rem;
+       }
         .chat-bubble {
-             background-color: #e0e0e0;
-           padding: 0.75rem;
+            background-color: #e0e0e0;
+            padding: 0.75rem;
             border-radius: 0.5rem;
             margin-bottom: 0.5rem;
              max-width: 80%;
-        }
-         .chat-bubble.user {
+       }
+        .chat-bubble.user {
             align-self: flex-end;
             background-color: #dcf8c6;
-        }
-    </style>
+       }
+       .chat-input-container {
+           display: flex;
+           margin-top: 1rem;
+      }
+      .chat-input-container input {
+          flex: 1;
+          padding: 0.75rem;
+           border: 1px solid #ccc;
+           border-radius: 0.5rem;
+         margin-right: 0.5rem;
+      }
+   </style>
 </head>
 <body class="bg-gray-100 relative">
  <div class="header-container p-2 text-white">
-    <div class="container mx-auto flex justify-center items-center">
-        <h1 class="text-2xl font-bold text-center text-green-900">RüyAi</h1>
-    </div>
+     <div class="container mx-auto flex justify-center items-center">
+         <h1 class="text-2xl font-bold text-center text-black">RüyAi</h1>
+     </div>
  </div>
    <div class="content-container">
        <div class="main-content rounded-lg w-full max-w-3xl">
-           <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center justify-between mb-4">
                <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="keywordLabel">Rüya anahtar kelimenizi girin:</label>
           </div>
            <!-- Dream Input Form -->
-         <form id="dreamForm" class="mb-6">
-               <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4" placeholder="örn: uçmak, su, yılan" required>
+          <form id="dreamForm" class="mb-6">
+                <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4" placeholder="örn: uçmak, su, yılan" required>
            <!-- Interpretation Style Selection -->
-          <div class="flex items-center justify-between mb-4">
-              <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
-              <select id="language-select" class="bg-gray-700 text-white rounded-lg">
-                  <option value="tr">Türkçe</option>
+           <div class="flex items-center justify-between mb-4">
+               <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
+                <select id="language-select" class="bg-gray-700 text-white rounded-lg">
+                    <option value="tr">Türkçe</option>
                     <option value="en">English</option>
                      <option value="fr">Français</option>
                      <option value="ar">العربية</option>
-              </select>
-          </div>
-        <div class="mb-4">
-             <div class="radio-container">
-                <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
-                 <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
+                 </select>
+            </div>
+           <div class="mb-4">
+              <div class="radio-container">
+                    <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
+                     <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
                         Dini/Tarihsel
-                    <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
-                 </label>
-               </div>
-               <div class="radio-container">
+                        <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
+                    </label>
+                 </div>
+                 <div class="radio-container">
                    <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
-                   <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
-                         Yaşam Tarzına Dayalı
-                        <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
-                     </label>
+                      <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
+                        Yaşam Tarzına Dayalı
+                           <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
+                       </label>
                   </div>
+            </div>
+              <div class="flex items-center justify-between">
+                  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
+                      Rüyayı Yorumla
+                   </button>
+                  <div id="loadingIndicator" class="loading-spinner"></div>
              </div>
-          <div class="flex items-center justify-between">
-               <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
-                     Rüyayı Yorumla
-                </button>
-                 <div id="loadingIndicator" class="loading-spinner"></div>
-           </div>
-    </form>
+        </form>
             <!-- Interpretation Display Area -->
-        <div id="interpretationResult" class="mt-6">
+         <div id="interpretationResult" class="mt-6">
              <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
              <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.</p>
-               <div id="interpretationText" class="interpretation-area text-gray-700 chat-container">
-                    <!-- Interpretation will be displayed here -->
-                </div>
+             <div id="interpretationText" class="interpretation-area chat-container">
+                 <!-- Interpretation will be displayed here -->
+              </div>
           </div>
-     </div>
- </div>
+         <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Sorunuzu girin..." />
+                  <button id="sendChat" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Gönder</button>
+        </div>
+      </div>
+  </div>
     <!-- JavaScript Code -->
-    <script>
+   <script>
        document.addEventListener('DOMContentLoaded', function() {
-          const languageSelect = document.getElementById('language-select');
+            const languageSelect = document.getElementById('language-select');
           let currentLanguage = 'tr';
-          languageSelect.value = currentLanguage
+           languageSelect.value = currentLanguage
              // Translations
             const translations = {
                 tr: {
                    "RüyAi": "RüyAi",
-                   "keywordLabel": "Rüya anahtar kelimenizi girin:",
+                    "keywordLabel": "Rüya anahtar kelimenizi girin:",
                    "interpretationStyleLabel": "Yorumlama Stilini Seçin:",
                    "religiousLabel": "Dini/Tarihsel",
                     "religiousTooltip": "İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.",
-                   "lifestyleLabel": "Yaşam Tarzına Dayalı",
-                   "lifestyleTooltip": "Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.",
-                   "interpretButton": "Rüyayı Yorumla",
-                  "interpretationHeader": "Yorum:",
-                  "interpretationDisclaimer": "Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.",
+                  "lifestyleLabel": "Yaşam Tarzına Dayalı",
+                    "lifestyleTooltip": "Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.",
+                    "interpretButton": "Rüyayı Yorumla",
+                   "interpretationHeader": "Yorum:",
+                    "interpretationDisclaimer": "Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.",
                },
-               en: {
-                  "RüyAi": "RüyAi",
+                en: {
+                   "RüyAi": "RüyAi",
                  "keywordLabel": "Enter your dream keyword:",
-                   "interpretationStyleLabel": "Choose Interpretation Style:",
-                  "religiousLabel": "Religious/Historical",
+                    "interpretationStyleLabel": "Choose Interpretation Style:",
+                   "religiousLabel": "Religious/Historical",
                     "religiousTooltip": "Interpretations based on İbn-i Sirin and other Islamic sources, also including Christian and Jewish texts.",
                     "lifestyleLabel": "Lifestyle-based",
                    "lifestyleTooltip": "Interpretations focusing on daily experiences, personal relationships, and modern lifestyle.",
-                    "interpretButton": "Interpret Dream",
+                   "interpretButton": "Interpret Dream",
                    "interpretationHeader": "Interpretation:",
                     "interpretationDisclaimer": "This interpretation uses reputable sources in Islamic literature.",
-                },
-               fr: {
-                    "RüyAi": "RüyAi",
-                    "keywordLabel": "Entrez votre mot-clé de rêve:",
-                   "interpretationStyleLabel": "Choisissez le style d'interprétation:",
+               },
+                fr: {
+                   "RüyAi": "RüyAi",
+                  "keywordLabel": "Entrez votre mot-clé de rêve:",
+                     "interpretationStyleLabel": "Choisissez le style d'interprétation:",
                     "religiousLabel": "Religieux/Historique",
                     "religiousTooltip": "Interprétations basées sur İbn-i Sirin et d'autres sources islamiques, incluant également les textes chrétiens et juifs.",
-                   "lifestyleLabel": "Basé sur le style de vie",
+                  "lifestyleLabel": "Basé sur le style de vie",
                    "lifestyleTooltip": "Interprétations axées sur les expériences quotidiennes, les relations personnelles et le style de vie moderne.",
                     "interpretButton": "Interpréter le Rêve",
                     "interpretationHeader": "Interprétation:",
-                  "interpretationDisclaimer": "Cette interprétation utilise des sources réputées de la littérature islamique.",
-                },
-               ar: {
-                   "RüyAi": "رؤياي",
-                   "keywordLabel": "أدخل الكلمة المفتاحية لحلمك:",
-                     "interpretationStyleLabel": "اختر أسلوب التفسير:",
-                   "religiousLabel": "ديني/تاريخي",
-                     "religiousTooltip": "تفسيرات تستند إلى ابن سيرين ومصادر إسلامية أخرى، وتشمل أيضًا النصوص المسيحية واليهودية.",
-                    "lifestyleLabel": "مستند إلى نمط الحياة",
-                    "lifestyleTooltip": "تفسيرات تركز على التجارب اليومية والعلاقات الشخصية ونمط الحياة الحديث.",
-                    "interpretButton": "تفسير الحلم",
-                  "interpretationHeader": "التفسير:",
-                     "interpretationDisclaimer": "يستخدم هذا التفسير مصادر موثوقة في الأدب الإسلامي.",
-               }
+                    "interpretationDisclaimer": "Cette interprétation utilise des sources réputées de la littérature islamique.",
+               },
+                 ar: {
+                    "RüyAi": "رؤياي",
+                    "keywordLabel": "أدخل الكلمة المفتاحية لحلمك:",
+                      "interpretationStyleLabel": "اختر أسلوب التفسير:",
+                     "religiousLabel": "ديني/تاريخي",
+                       "religiousTooltip": "تفسيرات تستند إلى ابن سيرين ومصادر إسلامية أخرى، وتشمل أيضًا النصوص المسيحية واليهودية.",
+                     "lifestyleLabel": "مستند إلى نمط الحياة",
+                     "lifestyleTooltip": "تفسيرات تركز على التجارب اليومية والعلاقات الشخصية ونمط الحياة الحديث.",
+                   "interpretButton": "تفسير الحلم",
+                     "interpretationHeader": "التفسير:",
+                   "interpretationDisclaimer": "يستخدم هذا التفسير مصادر موثوقة في الأدب الإسلامي.",
+              }
           };
           // Function to apply the language on ui elements
-          function applyTranslations() {
-              const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
-              document.querySelector('h1').textContent = translations[currentLanguage]["RüyAi"]
-               elementsToTranslate.forEach(element => {
-                  const key = element.getAttribute('data-translate-key');
-                  if (translations[currentLanguage][key]) {
-                    element.textContent = translations[currentLanguage][key];
-                   }
+           function applyTranslations() {
+               const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
+               document.querySelector('h1').textContent = translations[currentLanguage]["RüyAi"]
+                elementsToTranslate.forEach(element => {
+                   const key = element.getAttribute('data-translate-key');
+                    if (translations[currentLanguage][key]) {
+                       element.textContent = translations[currentLanguage][key];
+                    }
                 });
-          }
-       applyTranslations();
-          // Function to handle form submission
-        document.getElementById('dreamForm').addEventListener('submit', async function (event) {
-           event.preventDefault();
-             const keyword = document.getElementById('dreamKeyword').value;
-            const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
-            const loadingIndicator = document.getElementById('loadingIndicator');
-             const interpretationText = document.getElementById('interpretationText');
-             const interpretationMessage = document.getElementById('interpretationMessage');
-            interpretationText.innerHTML = '';
-           loadingIndicator.style.display = 'inline-block'; // Show spinner
-          try {
-                const response = await fetch('/api/interpret', {
-                      method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                     },
-                   body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle, language: currentLanguage })
-                });
-                if (!response.ok) {
-                   throw new Error(`HTTP error! Status: ${response.status}`);
-                 }
-                 const data = await response.json();
-                  //Update the interpretation result
+            }
+         applyTranslations();
+           // Function to handle form submission
+           document.getElementById('dreamForm').addEventListener('submit', async function (event) {
+              event.preventDefault();
+              const keyword = document.getElementById('dreamKeyword').value;
+             const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
+               const loadingIndicator = document.getElementById('loadingIndicator');
+              const interpretationText = document.getElementById('interpretationText');
+              const interpretationMessage = document.getElementById('interpretationMessage');
+             interpretationText.innerHTML = '';
+            loadingIndicator.style.display = 'inline-block'; // Show spinner
+               try {
+                    const response = await fetch('/api/interpret', {
+                        method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json'
+                      },
+                     body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle, language: currentLanguage })
+                    });
+                  if (!response.ok) {
+                     throw new Error(`HTTP error! Status: ${response.status}`);
+                     }
+                   const data = await response.json();
+                 //Update the interpretation result
                    const formattedInterpretation = data.interpretation
-                  .split('\n')
-                   .filter(line => line.trim() !== '')
-                   .map(line => {
+                 .split('\n')
+                  .filter(line => line.trim() !== '')
+                 .map(line => {
                    return `<div class="chat-bubble">${line}</div>`;
                     })
                   .join('');
-                interpretationText.innerHTML = formattedInterpretation;
+               interpretationText.innerHTML = formattedInterpretation;
 
-             } catch (error) {
-               console.error('Error:', error);
-                interpretationText.textContent = "Rüya yorumu alınırken bir hata oluştu.";
-                interpretationMessage.textContent = "Hata: " + error.message;
-             } finally {
-                loadingIndicator.style.display = 'none'; // Hide spinner
-             }
+              } catch (error) {
+                  console.error('Error:', error);
+                  interpretationText.textContent = "Rüya yorumu alınırken bir hata oluştu.";
+                  interpretationMessage.textContent = "Hata: " + error.message;
+               } finally {
+                  loadingIndicator.style.display = 'none'; // Hide spinner
+              }
+         });
+           // language selector
+           languageSelect.addEventListener('change', () => {
+               currentLanguage = languageSelect.value;
+                 applyTranslations();
+           })
+
+           // Chat functionality
+            const sendChatButton = document.getElementById('sendChat');
+          const chatInput = document.getElementById('chatInput');
+           const interpretationText = document.getElementById('interpretationText');
+
+            sendChatButton.addEventListener('click', async () => {
+                const userMessage = chatInput.value;
+                if (userMessage.trim() === '') return;
+              // Add user message to the chat
+            interpretationText.innerHTML += `<div class="chat-bubble user">${userMessage}</div>`;
+              chatInput.value = '';
+
+              try{
+                     const response = await fetch('/api/interpret', {
+                          method: 'POST',
+                        headers: {
+                           'Content-Type': 'application/json'
+                            },
+                       body: JSON.stringify({ keyword: userMessage, interpretationStyle: 'followup', language: currentLanguage })
+                     });
+                   if(!response.ok){
+                      throw new Error(`HTTP error! Status: ${response.status}`)
+                     }
+                    const data = await response.json()
+                    const formattedInterpretation = data.interpretation
+                   .split('\n')
+                   .filter(line => line.trim() !== '')
+                   .map(line => {
+                       return `<div class="chat-bubble">${line}</div>`;
+                       })
+                   .join('');
+
+                   interpretationText.innerHTML += formattedInterpretation
+                  } catch (error){
+                    console.error('Error:', error);
+                     interpretationText.innerHTML += `<div class="chat-bubble">There was an error while fetching the response: ${error.message}</div>`;
+                }
+             });
         });
-        // language selector
-      languageSelect.addEventListener('change', () => {
-          currentLanguage = languageSelect.value;
-          applyTranslations();
-      })
-    });
     </script>
 </body>
 </html>
