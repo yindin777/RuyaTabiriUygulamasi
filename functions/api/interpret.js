@@ -7,22 +7,20 @@ export async function onRequestPost(context) {
          const language = requestBody.language;
 
 
-
       if (!geminiApiKey) {
         return new Response('GEMINI_API_KEY is not set in environment variables.', { status: 500 });
       }
-      let prompt = ''
 
-      if (language === 'tr'){
-          prompt = `İbn-i Sirin'in kitabından ve diğer İslami kaynaklardan yararlanarak, "${keyword}" rüya kelimesini ${interpretationStyle} perspektifinden yorumlayın. Ayrıca, rüyanın olası yaşam tarzı, biyolojik ve yaş faktörleri üzerindeki etkisini açıklayın. Ayrıca Yahudi-Hristiyan kaynaklarına ve modern bilimsel kaynaklara da başvurun.`
-      } else if (language === 'en') {
-        prompt = `Interpret the dream keyword "${keyword}" from a ${interpretationStyle} perspective, incorporating insights from İbn-i Sirin's book and other Islamic literature. Also, explain the possible influence of lifestyle, biological, and age factors on the dream, and include insights from Judeo-Christian texts and modern scientific perspectives.`
-      } else if (language === 'fr') {
-         prompt = `Interprétez le mot-clé de rêve "${keyword}" dans une perspective ${interpretationStyle}, en intégrant des éléments du livre d'İbn-i Sirin et d'autres textes islamiques. Expliquez aussi l'influence possible du style de vie, des facteurs biologiques et de l'âge sur le rêve, tout en incluant des perspectives des textes judéo-chrétiens et des approches scientifiques modernes.`
-      } else if (language === 'ar') {
-           prompt = `فسر الكلمة المفتاحية للحلم "${keyword}" من منظور ${interpretationStyle}، مع دمج رؤى من كتاب ابن سيرين والأدب الإسلامي الآخر. اشرح أيضًا التأثير المحتمل لنمط الحياة والعوامل البيولوجية والعمر على الحلم، وقم بتضمين رؤى من النصوص اليهودية المسيحية ووجهات النظر العلمية الحديثة.`
-       }
-
+        let prompt = '';
+         if (language === 'tr'){
+             prompt = `Kur'an, İncil, İbn-i Sirin'in kitabı, Avicenna'nın kitapları ve diğer saygın kaynaklardan yola çıkarak "${keyword}" rüyası ile ilgili referansları ve olası ilişkili rüyaları bul ve sun. Rüyayı yorumlamak yerine, bu kaynaklardaki ilgili rüya anlatılarını ve açıklamalarını özetle. Yaşam tarzı ve sağlık durumunun uykuyu nasıl etkilediğiyle ilgili bilgileri de dahil et.  Mümkün olan her yerde ilgili hadis ve ayetlere referans ver. Sonucu detaylı bir liste olarak sun.`
+         } else if (language === 'en') {
+             prompt = `Find and present references and potentially related dreams for the keyword "${keyword}" from sources including the Quran, Bible, İbn-i Sirin’s book, Avicenna’s books, and other respected texts. Summarize related dream narratives and explanations from these sources rather than interpreting the dream itself. Include information on how lifestyle and health conditions might affect sleep. Provide references to relevant hadith and verses where applicable. Present the result as a detailed list.`
+         } else if (language === 'fr') {
+             prompt = `Trouvez et présentez des références et des rêves potentiellement liés pour le mot-clé "${keyword}" à partir de sources telles que le Coran, la Bible, le livre d'İbn-i Sirin, les livres d'Avicenne et d'autres textes respectés. Résumez les récits de rêves et les explications connexes tirées de ces sources au lieu d'interpréter le rêve lui-même. Incluez des informations sur la manière dont le style de vie et les conditions de santé pourraient affecter le sommeil. Fournissez des références aux hadiths et versets pertinents, le cas échéant. Présentez le résultat sous forme de liste détaillée.`
+         } else if (language === 'ar') {
+             prompt = `ابحث وقدم مراجع وأحلامًا محتملة ذات صلة بالكلمة المفتاحية "${keyword}" من مصادر تشمل القرآن الكريم والإنجيل وكتاب ابن سيرين وكتب ابن سينا ونصوص أخرى موثوقة. لخص روايات وتفسيرات الأحلام ذات الصلة من هذه المصادر بدلاً من تفسير الحلم نفسه. قم بتضمين معلومات حول كيفية تأثير نمط الحياة والظروف الصحية على النوم. قدم مراجع للأحاديث والآيات ذات الصلة حيثما ينطبق ذلك. قدم النتيجة في قائمة مفصلة.`
+         }
 
 
         const geminiAPIUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + geminiApiKey;
@@ -34,7 +32,6 @@ export async function onRequestPost(context) {
                }
            ]
         }
-
 
          const geminiResponse = await fetch(geminiAPIUrl, {
              method: 'POST',
