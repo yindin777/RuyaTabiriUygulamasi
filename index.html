@@ -1,86 +1,225 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dream Interpretation AI</title>
+    <title>Rüya Yorumlama AI</title>
     <!-- Link to Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
     <style>
         .radio-container {
-            display: flex;
+           display: flex;
             align-items: center;
-        }
-        .radio-container input[type="radio"] {
-            margin-right: 0.5rem;
-        }
+         }
+         .radio-container input[type="radio"] {
+             margin-right: 0.5rem;
+         }
         .interpretation-area {
-             white-space: pre-line; /* Allows for line breaks in the interpretation */
+            white-space: pre-line;
+        }
+        .loading-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+           animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin {
+           0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+       .tooltip {
+            position: relative;
+            display: inline-block;
+           cursor: help;
+        }
+        .tooltip .tooltiptext {
+             visibility: hidden;
+            width: 200px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+             padding: 5px;
+             border-radius: 6px;
+           position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+           margin-left: -100px;
+           opacity: 0;
+            transition: opacity 0.3s;
+       }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+           opacity: 1;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-2xl">
-        <!-- Header -->
-        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Dream Interpretation AI</h1>
-        <!-- Dream Input Form -->
-        <form id="dreamForm" class="mb-6">
-            <div class="mb-4">
-                <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2">Enter your dream keyword:</label>
-                <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="e.g., flying, water, snake" required>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen mt-4">
+<div class="bg-white p-8 rounded-xl shadow-md w-full max-w-3xl">
+  <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Rüya Yorumlama AI</h1>
+       <select id="language-select" class="bg-gray-700 text-white rounded">
+            <option value="tr">Türkçe</option>
+            <option value="en">English</option>
+           <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+       </select>
+    </div>
+    <!-- Dream Input Form -->
+      <form id="dreamForm" class="mb-6">
+        <div class="mb-4">
+            <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="keywordLabel">Rüya anahtar kelimenizi girin:</label>
+            <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="örn: uçmak, su, yılan" required>
+        </div>
+        <!-- Interpretation Style Selection -->
+        <div class="mb-4">
+            <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
+            <div class="radio-container">
+                <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
+                <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
+                    Dini/Tarihsel
+                    <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
+                </label>
             </div>
-            <!-- Interpretation Style Selection -->
-            <div class="mb-4">
-                <p class="block text-gray-700 text-sm font-bold mb-2">Choose Interpretation Style:</p>
-                <div class="radio-container">
-                    <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
-                    <label for="religiousRadio" class="text-gray-700 text-sm">Religious/Historical</label>
-                </div>
-                <div class="radio-container">
-                    <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
-                    <label for="lifestyleRadio" class="text-gray-700 text-sm">Lifestyle-based</label>
-                </div>
-            </div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Interpret Dream
-            </button>
-        </form>
-        <!-- Interpretation Display Area -->
-        <div id="interpretationResult" class="mt-6">
-            <h2 class="text-xl font-semibold mb-2 text-gray-800">Interpretation:</h2>
-            <div id="interpretationText" class="interpretation-area text-gray-700">
-                <!-- Interpretation will be displayed here -->
+            <div class="radio-container">
+                <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
+                 <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
+                    Yaşam Tarzına Dayalı
+                   <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
+               </label>
             </div>
         </div>
+         <div class="flex items-center justify-between">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
+                Rüyayı Yorumla
+             </button>
+           <div id="loadingIndicator" class="loading-spinner"></div>
+        </div>
+    </form>
+    <!-- Interpretation Display Area -->
+   <div id="interpretationResult" class="mt-6">
+        <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
+        <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum yapay zeka tarafından sağlanmıştır.</p>
+         <div id="interpretationText" class="interpretation-area text-gray-700">
+           <!-- Interpretation will be displayed here -->
+        </div>
     </div>
-    <!-- JavaScript Code -->
-    <script>
-        // Function to handle form submission
-        document.getElementById('dreamForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
-            const keyword = document.getElementById('dreamKeyword').value;
-            const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
-            document.getElementById('interpretationText').textContent = "Loading...";
-            try {
-                const response = await fetch('/api/interpret', { // Using /api/interpret endpoint
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
+</div>
+<!-- JavaScript Code -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+          const languageSelect = document.getElementById('language-select');
+           let currentLanguage = 'tr';
+           languageSelect.value = currentLanguage
+
+             // Translations
+            const translations = {
+                    tr: {
+                       "Rüya Yorumlama AI": "Rüya Yorumlama AI",
+                     "keywordLabel": "Rüya anahtar kelimenizi girin:",
+                         "interpretationStyleLabel": "Yorumlama Stilini Seçin:",
+                         "religiousLabel": "Dini/Tarihsel",
+                       "religiousTooltip": "İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.",
+                         "lifestyleLabel": "Yaşam Tarzına Dayalı",
+                         "lifestyleTooltip": "Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.",
+                       "interpretButton": "Rüyayı Yorumla",
+                        "interpretationHeader": "Yorum:",
+                        "interpretationDisclaimer": "Bu yorum yapay zeka tarafından sağlanmıştır.",
                     },
-                    body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle })
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const data = await response.json();
-                //Update the interpretation result
-                document.getElementById('interpretationText').textContent = data.interpretation;
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('interpretationText').textContent = "Error fetching the dream interpretation.";
+                    en: {
+                         "Rüya Yorumlama AI": "Dream Interpretation AI",
+                      "keywordLabel": "Enter your dream keyword:",
+                         "interpretationStyleLabel": "Choose Interpretation Style:",
+                         "religiousLabel": "Religious/Historical",
+                         "religiousTooltip": "Interpretations based on İbn-i Sirin and other Islamic sources, also including Christian and Jewish texts.",
+                         "lifestyleLabel": "Lifestyle-based",
+                         "lifestyleTooltip": "Interpretations focusing on daily experiences, personal relationships, and modern lifestyle.",
+                         "interpretButton": "Interpret Dream",
+                         "interpretationHeader": "Interpretation:",
+                        "interpretationDisclaimer": "This interpretation is provided by an AI.",
+                     },
+                     fr: {
+                         "Rüya Yorumlama AI": "IA d'Interprétation des Rêves",
+                         "keywordLabel": "Entrez votre mot-clé de rêve:",
+                          "interpretationStyleLabel": "Choisissez le style d'interprétation:",
+                        "religiousLabel": "Religieux/Historique",
+                         "religiousTooltip": "Interprétations basées sur İbn-i Sirin et d'autres sources islamiques, incluant également les textes chrétiens et juifs.",
+                        "lifestyleLabel": "Basé sur le style de vie",
+                         "lifestyleTooltip": "Interprétations axées sur les expériences quotidiennes, les relations personnelles et le style de vie moderne.",
+                          "interpretButton": "Interpréter le Rêve",
+                           "interpretationHeader": "Interprétation:",
+                         "interpretationDisclaimer": "Cette interprétation est fournie par une IA.",
+                       },
+                        ar: {
+                            "Rüya Yorumlama AI": "الذكاء الاصطناعي لتفسير الأحلام",
+                            "keywordLabel": "أدخل الكلمة المفتاحية لحلمك:",
+                           "interpretationStyleLabel": "اختر أسلوب التفسير:",
+                           "religiousLabel": "ديني/تاريخي",
+                            "religiousTooltip": "تفسيرات تستند إلى ابن سيرين ومصادر إسلامية أخرى، وتشمل أيضًا النصوص المسيحية واليهودية.",
+                           "lifestyleLabel": "مستند إلى نمط الحياة",
+                           "lifestyleTooltip": "تفسيرات تركز على التجارب اليومية والعلاقات الشخصية ونمط الحياة الحديث.",
+                            "interpretButton": "تفسير الحلم",
+                          "interpretationHeader": "التفسير:",
+                          "interpretationDisclaimer": "هذا التفسير مقدم من قبل الذكاء الاصطناعي.",
+                      }
+                };
+            // Function to apply the language on ui elements
+            function applyTranslations() {
+                const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
+                 document.querySelector('h1').textContent = translations[currentLanguage]["Rüya Yorumlama AI"]
+                elementsToTranslate.forEach(element => {
+                     const key = element.getAttribute('data-translate-key');
+                     if (translations[currentLanguage][key]) {
+                           element.textContent = translations[currentLanguage][key];
+                     }
+                 });
             }
-        });
+        applyTranslations();
+
+
+        // Function to handle form submission
+            document.getElementById('dreamForm').addEventListener('submit', async function (event) {
+                 event.preventDefault();
+                const keyword = document.getElementById('dreamKeyword').value;
+                 const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
+                const loadingIndicator = document.getElementById('loadingIndicator');
+                const interpretationText = document.getElementById('interpretationText');
+               const interpretationMessage = document.getElementById('interpretationMessage');
+                interpretationText.textContent = '';
+                 loadingIndicator.style.display = 'inline-block'; // Show spinner
+                 try {
+                   const response = await fetch('/api/interpret', {
+                       method: 'POST',
+                      headers: {
+                         'Content-Type': 'application/json'
+                         },
+                         body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle, language: currentLanguage })
+                     });
+                    if (!response.ok) {
+                       throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    //Update the interpretation result
+                      interpretationText.textContent = data.interpretation;
+                 } catch (error) {
+                    console.error('Error:', error);
+                  interpretationText.textContent = "Rüya yorumu alınırken bir hata oluştu.";
+                    interpretationMessage.textContent = "Hata: " + error.message;
+                } finally {
+                  loadingIndicator.style.display = 'none'; // Hide spinner
+                 }
+            });
+            // language selector
+        languageSelect.addEventListener('change', () => {
+                currentLanguage = languageSelect.value;
+                 applyTranslations();
+        })
+      });
     </script>
 </body>
 </html>
