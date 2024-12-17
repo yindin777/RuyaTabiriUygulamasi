@@ -12,82 +12,29 @@ export async function onRequestPost(context) {
       }
 
         let prompt = '';
-
-        if (interpretationStyle === 'followup'){
-              if (language === 'tr'){
-                     prompt = `Verilen anahtar kelimeyi kullanarak önceki kaynakları (Kur'an, İncil, İbn-i Sirin'in kitabı, Avicenna'nın kitapları, hadisler ve diğer İslami kaynaklar) kullanarak ilgili kaynaklardaki metinler ve alıntılarla ilgili detaylı açıklama sun. Önceki kaynaklara dayanarak daha fazla bilgi ve detay ver. Yorum veya çıkarım yapma sadece kaynaklardaki metinleri kullan. "${keyword}" anahtar kelimesi için kaynaklardan bilgi topla ve sonuçları düzenli bir liste olarak sun. Sonucu aşağıdaki biçimde sun:
-
-          Kaynak Adı 1:
-                - Rüyayla ilgili metin 1
-               - Rüyayla ilgili metin 2
-         Kaynak Adı 2:
-             - Rüyayla ilgili metin 1
-             - Rüyayla ilgili metin 2`
-                } else if (language === 'en') {
-                     prompt = `Using the given keyword, Provide a detailed explanation of the previous sources (Quran, Bible, İbn-i Sirin’s book, Avicenna’s books, hadith, and other Islamic sources) with text and quotes from the related sources. Provide more information and detail based on the previous sources. Do not make interpretations or inferences, only use text from sources. Gather information from the sources for the keyword "${keyword}", and present the results as an organized list. Present the result in the following format:
-         Source Name 1:
-              - Text related to the dream 1
-               - Text related to the dream 2
-         Source Name 2:
-              - Text related to the dream 1
-               - Text related to the dream 2`
-               } else if (language === 'fr') {
-                  prompt = `En utilisant le mot-clé donné, fournissez une explication détaillée des sources précédentes (Coran, Bible, livre d'İbn-i Sirin, livres d'Avicenne, hadiths et autres sources islamiques) avec du texte et des citations provenant des sources concernées. Fournissez plus d'informations et de détails basés sur les sources précédentes. Ne faites pas d'interprétations ni d'inférences, utilisez uniquement du texte provenant des sources. Rassemblez des informations à partir des sources pour le mot-clé "${keyword}" et présentez les résultats sous forme de liste organisée. Présentez le résultat dans le format suivant :
-              Nom de la source 1 :
-                 - Texte relatif au rêve 1
-                  - Texte relatif au rêve 2
-              Nom de la source 2 :
-                   - Texte relatif au rêve 1
-                  - Texte relatif au rêve 2`
-               } else if (language === 'ar') {
-                    prompt = `باستخدام الكلمة المفتاحية المعطاة، قدم شرحًا تفصيليًا للمصادر السابقة (القرآن الكريم والإنجيل وكتاب ابن سيرين وكتب ابن سينا والأحاديث النبوية ومصادر إسلامية أخرى) مع نص واقتباسات من المصادر ذات الصلة. قدم المزيد من المعلومات والتفاصيل بناءً على المصادر السابقة. لا تقم بإجراء أي تفسيرات أو استنتاجات، استخدم فقط النصوص من المصادر. اجمع المعلومات من المصادر للكلمة المفتاحية "${keyword}"، وقدم النتائج في قائمة منظمة. قدم النتيجة في الشكل التالي:
-       اسم المصدر 1:
-            - نص متعلق بالحلم 1
-           - نص متعلق بالحلم 2
-          اسم المصدر 2:
-            - نص متعلق بالحلم 1
-          - نص متعلق بالحلم 2`
-               }
-       } else {
-           if (language === 'tr'){
-                prompt = `Lütfen şunları yap: 1) Kur'an'dan, İncil'den, İbn-i Sirin'in kitabından, Avicenna'nın kitaplarından, hadislerden ve diğer saygın İslami kaynaklardan doğrudan ilgili alıntıları içeren bir liste oluştur. 2) Rüyayla ilgili olarak doğrudan belirtilen metinleri kullan, herhangi bir yorum veya çıkarım yapma. 3) Listede kaynak adlarını, ayetleri veya hadisleri belirt. 4) Kaynaklardan belirtilen bilgiye dayalı olarak kısa açıklamalar yap. "${keyword}" anahtar kelimesini kullanarak kaynaklardan ilgili metinleri çıkar ve düzenle. Sonucu aşağıdaki biçimde liste halinde sun:
-
-         Kaynak Adı 1:
-              - Rüyayla ilgili metin 1
-              - Rüyayla ilgili metin 2
-        Kaynak Adı 2:
-             - Rüyayla ilgili metin 1
-             - Rüyayla ilgili metin 2`
+         if (interpretationStyle === 'followup'){
+               if (language === 'tr'){
+                  prompt = `Önceki rüya anahtar kelimesiyle bağlantılı önceki kaynakları (Kur'an, İncil, İbn-i Sirin'in kitabı, Avicenna'nın kitapları, hadisler ve diğer İslami kaynaklar) kullanarak detaylı, sohbet tonunda, kişisel, samimi ve anlaşılabilir bilgiler sun. Rüyaların gizemli dünyasına gir, kaynaklarda bulduğum bilgileri kullanarak, rüya sahibiyle empati kur ve ona yol göster. Sadece önceki kaynaklardaki ilgili metinleri ve alıntıları kullanarak, rüya ile ilgili daha derinlemesine açıklamalar yap. Daha çok hayırlara yönlendiren, pozitif etkilerinden bahset. "${keyword}" anahtar kelimesiyle ilgili, kaynaklarda geçen bilgilere, nasihatlere ve rüya tavsiyelerine dayanarak detaylı açıklamalar sun. Cevapları kısa kısa paragraf şeklinde, kolay anlaşılır ve sohbet tonunda sun.`
+                 } else if (language === 'en') {
+                     prompt = `Using the previous dream keyword as context, provide a detailed, conversational, personal, friendly and easy to understand explanation using the previously used sources (Quran, Bible, İbn-i Sirin’s book, Avicenna’s books, hadith, and other Islamic sources). Immerse yourself in the mysterious world of dreams, using the information I find in sources, empathize with the dreamer and guide them. Provide a more detailed explanation related to the dream based on relevant text and quotes from the previous sources. Focus more on the positive effects, and guidance towards good. Based on the information, advice, and dream recommendations mentioned in the sources, give detailed explanations regarding the keyword "${keyword}". Present the answers in short, easy-to-understand paragraphs, in a conversational tone.`
+                 } else if (language === 'fr') {
+                      prompt = `En utilisant le mot-clé de rêve précédent comme contexte, fournissez une explication détaillée, conversationnelle, personnelle, amicale et facile à comprendre en utilisant les sources utilisées précédemment (Coran, Bible, livre d'İbn-i Sirin, livres d'Avicenne, hadiths et autres sources islamiques). Plongez-vous dans le monde mystérieux des rêves, en utilisant les informations que je trouve dans les sources, faites preuve d'empathie avec le rêveur et guidez-le. Fournissez une explication plus détaillée liée au rêve en vous basant sur les textes et citations pertinents des sources précédentes. Concentrez-vous davantage sur les effets positifs et les conseils vers le bien. En vous basant sur les informations, les conseils et les recommandations de rêves mentionnés dans les sources, donnez des explications détaillées concernant le mot-clé "${keyword}". Présentez les réponses dans de courts paragraphes faciles à comprendre, sur un ton conversationnel.`
+                 } else if (language === 'ar') {
+                    prompt = `باستخدام الكلمة المفتاحية للحلم السابقة كسياق، قدم شرحًا تفصيليًا بأسلوب المحادثة والشخصي والودي وسهل الفهم باستخدام المصادر المستخدمة سابقًا (القرآن الكريم والإنجيل وكتاب ابن سيرين وكتب ابن سينا والأحاديث النبوية والمصادر الإسلامية الأخرى). انغمس في عالم الأحلام الغامض، وباستخدام المعلومات التي أجدها في المصادر، وتعاطف مع صاحب الحلم ووجهه. قدم شرحًا أكثر تفصيلاً متعلقًا بالحلم بناءً على النصوص والاقتباسات ذات الصلة من المصادر السابقة. ركز أكثر على الآثار الإيجابية، والتوجيه نحو الخير. بناءً على المعلومات والنصائح وتوصيات الأحلام المذكورة في المصادر، قدم شروحات تفصيلية بخصوص الكلمة المفتاحية "${keyword}". قدم الإجابات في فقرات قصيرة سهلة الفهم، بأسلوب محادثة.`
+                }
+        }  else {
+            if (language === 'tr'){
+                prompt = `İbn-i Sirin'in rüya yorumları kitabını ve diğer saygın İslam kaynaklarını, Kur'an'ı, İncil'i ve Tevrat'ı kullanarak, rüya ve uyku konusunda bilgili, empatik, arkadaş canlısı, ve samimi bir şekilde, rüya ve uyku ile ilgili sana sorulan sorulara bilgi ver. Rüya anahtar kelimesi olan "${keyword}" ile ilgili, hem rüya hem de uyku üzerine yazılmış metinlerde, alıntılarda ve nasihatlerde geçen bilgileri sun. Yaşam tarzının, beslenmenin, stresin ve diğer faktörlerin rüyayı nasıl etkileyebileceğine de değin. Bu etkenler arasındaki bağlantıyı açıkla. Yorum yapma, çıkarımda bulunma sadece kaynaklardan alıntı yap. Rüyaların güvendiğin, salih ve haram yemeyen kişilerle paylaşılması gerektiği, rüyaların her zaman hayıra yorumlanması gerektiği nasihatini ve diğer nasihatleri belirt. Cevapları kısa kısa paragraf şeklinde, kolay anlaşılır ve sohbet tonunda sun.`
             } else if (language === 'en') {
-                  prompt = `Please do the following: 1) Create a list containing direct quotes from the Quran, Bible, İbn-i Sirin’s book, Avicenna’s books, hadith, and other respected Islamic sources that are directly relevant to dreams. 2) Only use text that is directly stated within the source related to dreams, do not make any interpretations or inferences. 3) Include the name of the source, verses or hadith in the list. 4) Add brief explanation based on the directly stated information from source. Extract and organize the text related to the keyword "${keyword}" from those sources. Present the result as a list in the following format:
-         Source Name 1:
-              - Text related to the dream 1
-               - Text related to the dream 2
-         Source Name 2:
-               - Text related to the dream 1
-              - Text related to the dream 2`
-             } else if (language === 'fr') {
-                  prompt = `Veuillez faire ce qui suit : 1) Créez une liste contenant des citations directes du Coran, de la Bible, du livre d'İbn-i Sirin, des livres d'Avicenne, des hadiths et d'autres sources islamiques respectées qui sont directement pertinentes pour les rêves. 2) N'utilisez que le texte qui est directement indiqué dans la source concernant les rêves, ne faites aucune interprétation ni inférence. 3) Incluez le nom de la source, les versets ou les hadiths dans la liste. 4) Ajoutez une brève explication basée sur les informations directement indiquées dans la source. Extrayez et organisez le texte relatif au mot-clé "${keyword}" à partir de ces sources. Présentez le résultat sous forme de liste dans le format suivant :
-         Nom de la source 1 :
-                - Texte relatif au rêve 1
-                - Texte relatif au rêve 2
-          Nom de la source 2 :
-                 - Texte relatif au rêve 1
-                 - Texte relatif au rêve 2`
+                prompt = `Using İbn-i Sirin's book on dream interpretations, and other respected Islamic sources, including the Quran, the Bible, and the Torah, respond to questions regarding dreams and sleep, acting like a knowledgeable, empathetic, friendly, and sincere guide with deep knowledge of dreams and sleep. Regarding the dream keyword "${keyword}", provide information based on what has been written in texts, quotes, and advice related to both dreams and sleep. Also discuss how lifestyle, diet, stress, and other factors can affect the dream, and explain the connection between these factors. Do not make interpretations or inferences, only use quotes from the sources. State the advice that dreams should be shared with trusted, righteous individuals who do not eat what is forbidden, and that dreams should always be interpreted for the good, along with other advice. Present the answers in short, easy-to-understand paragraphs, in a conversational tone.`
+            } else if (language === 'fr') {
+                prompt = `En utilisant le livre d'İbn-i Sirin sur l'interprétation des rêves et d'autres sources islamiques respectées, notamment le Coran, la Bible et la Torah, répondez aux questions concernant les rêves et le sommeil, en agissant comme un guide compétent, empathique, amical et sincère ayant une connaissance approfondie des rêves et du sommeil. Concernant le mot-clé de rêve "${keyword}", fournissez des informations basées sur ce qui a été écrit dans les textes, les citations et les conseils liés à la fois aux rêves et au sommeil. Discutez également de la manière dont le style de vie, l'alimentation, le stress et d'autres facteurs peuvent affecter le rêve, et expliquez le lien entre ces facteurs. Ne faites pas d'interprétations ni d'inférences, utilisez uniquement des citations des sources. Indiquez que les rêves doivent être partagés avec des personnes de confiance, justes et qui ne mangent pas ce qui est interdit, et que les rêves doivent toujours être interprétés pour le bien, ainsi que d'autres conseils. Présentez les réponses dans de courts paragraphes faciles à comprendre, sur un ton conversationnel.`
              } else if (language === 'ar') {
-                  prompt = `يرجى القيام بما يلي: 1) إنشاء قائمة تتضمن اقتباسات مباشرة من القرآن الكريم والإنجيل وكتاب ابن سيرين وكتب ابن سينا والحديث النبوي ومصادر إسلامية أخرى موثوقة ذات صلة مباشرة بالأحلام. 2) استخدم فقط النصوص التي تم ذكرها مباشرة في المصدر المتعلق بالأحلام، ولا تقم بأي تفسيرات أو استنتاجات. 3) قم بتضمين اسم المصدر أو الآيات أو الأحاديث في القائمة. 4) قم بإضافة شرح موجز بناءً على المعلومات المذكورة مباشرة في المصدر. استخرج ونظم النص المتعلق بالكلمة المفتاحية "${keyword}" من تلك المصادر. قدم النتيجة في قائمة بالصيغة التالية:
+                  prompt = `باستخدام كتاب ابن سيرين لتفسير الأحلام ومصادر إسلامية أخرى موثوقة، بما في ذلك القرآن الكريم والإنجيل والتوراة، أجب على الأسئلة المتعلقة بالأحلام والنوم، متصرفًا كمرشد ذي معرفة واسعة ومتعاطف وودود وصادق ولديه معرفة عميقة بالأحلام والنوم. فيما يتعلق بالكلمة المفتاحية للحلم "${keyword}"، قدم معلومات بناءً على ما كُتب في النصوص والاقتباسات والنصائح المتعلقة بكل من الأحلام والنوم. ناقش أيضًا كيف يمكن لنمط الحياة والنظام الغذائي والتوتر وعوامل أخرى أن تؤثر على الحلم، واشرح العلاقة بين هذه العوامل. لا تقم بإجراء تفسيرات أو استنتاجات، استخدم فقط اقتباسات من المصادر. اذكر النصيحة التي تنص على أنه يجب مشاركة الأحلام مع الأفراد الموثوق بهم والصالحين الذين لا يأكلون ما هو محرم، وأنه يجب تفسير الأحلام دائمًا من أجل الخير، إلى جانب النصائح الأخرى. قدم الإجابات في فقرات قصيرة سهلة الفهم، بأسلوب محادثة.`
+             }
+      }
 
-          اسم المصدر 1:
-              - نص متعلق بالحلم 1
-              - نص متعلق بالحلم 2
-          اسم المصدر 2:
-               - نص متعلق بالحلم 1
-               - نص متعلق بالحلم 2`
-            }
-       }
-
-
-        const geminiAPIUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + geminiApiKey;
+       const geminiAPIUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + geminiApiKey;
 
         const payload = {
            contents: [
@@ -97,33 +44,29 @@ export async function onRequestPost(context) {
            ]
         }
 
-         const geminiResponse = await fetch(geminiAPIUrl, {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json',
+        const geminiResponse = await fetch(geminiAPIUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
             },
-             body: JSON.stringify(payload),
+            body: JSON.stringify(payload),
         });
 
-         if (!geminiResponse.ok) {
-              throw new Error(`Gemini API error! Status: ${geminiResponse.status}`);
-         }
-
-
-         const geminiData = await geminiResponse.json();
-
-
-         if(geminiData.candidates && geminiData.candidates.length > 0) {
-          return new Response(JSON.stringify({interpretation: geminiData.candidates[0].content.parts[0].text}), {
-            headers: { 'Content-Type': 'application/json' },
-          });
-        } else {
-            return new Response(JSON.stringify({interpretation:"Could not retrieve Interpretation"}),{
-                headers: { 'Content-Type': 'application/json' },
-            })
+        if (!geminiResponse.ok) {
+            throw new Error(`Gemini API error! Status: ${geminiResponse.status}`);
         }
 
+        const geminiData = await geminiResponse.json();
 
+        if(geminiData.candidates && geminiData.candidates.length > 0) {
+            return new Response(JSON.stringify({interpretation: geminiData.candidates[0].content.parts[0].text}), {
+              headers: { 'Content-Type': 'application/json' },
+           });
+        } else {
+            return new Response(JSON.stringify({interpretation:"Could not retrieve Interpretation"}),{
+              headers: { 'Content-Type': 'application/json' },
+            })
+       }
     } catch (error) {
         console.error('Error:', error);
         return new Response(JSON.stringify({ error: error.message }), {
