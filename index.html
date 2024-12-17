@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rüya Yorumlama AI</title>
+    <title>RüyAi</title>
     <!-- Link to Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
@@ -92,59 +92,61 @@
     </style>
 </head>
 <body class="bg-gray-100 relative">
-  <div class="header-container p-2  text-white">
+ <div class="header-container p-2 text-white">
     <div class="container mx-auto flex justify-between items-center">
-        <h1 class="text-xl font-bold">Rüya Yorumlama AI</h1>
-         <select id="language-select" class="bg-gray-700 text-white rounded-lg">
-              <option value="tr">Türkçe</option>
-              <option value="en">English</option>
-             <option value="fr">Français</option>
-             <option value="ar">العربية</option>
-          </select>
-     </div>
+        <h1 class="text-xl font-bold">RüyAi</h1>
+    </div>
  </div>
- <div class="content-container">
-        <div class="main-content rounded-lg w-full max-w-3xl">
+   <div class="content-container">
+       <div class="main-content rounded-lg w-full max-w-3xl">
+            <div class="flex items-center justify-between mb-4">
+              <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="keywordLabel">Rüya anahtar kelimenizi girin:</label>
+            </div>
             <!-- Dream Input Form -->
-           <form id="dreamForm" class="mb-6">
-              <div class="mb-4">
-                   <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="keywordLabel">Rüya anahtar kelimenizi girin:</label>
-                   <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="örn: uçmak, su, yılan" required>
-              </div>
-                <!-- Interpretation Style Selection -->
-             <div class="mb-4">
-                 <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
-                 <div class="radio-container">
+            <form id="dreamForm" class="mb-6">
+                <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4" placeholder="örn: uçmak, su, yılan" required>
+            <!-- Interpretation Style Selection -->
+            <div class="flex items-center justify-between mb-4">
+               <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
+               <select id="language-select" class="bg-gray-700 text-white rounded-lg">
+                    <option value="tr">Türkçe</option>
+                    <option value="en">English</option>
+                   <option value="fr">Français</option>
+                  <option value="ar">العربية</option>
+              </select>
+           </div>
+           <div class="mb-4">
+               <div class="radio-container">
                     <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
-                      <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
+                     <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
                          Dini/Tarihsel
-                            <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
-                     </label>
-                  </div>
-                  <div class="radio-container">
-                     <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
-                       <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
-                         Yaşam Tarzına Dayalı
-                            <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
+                           <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
                         </label>
-                   </div>
+                    </div>
+                 <div class="radio-container">
+                       <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
+                      <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
+                           Yaşam Tarzına Dayalı
+                           <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
+                       </label>
+                    </div>
                 </div>
-             <div class="flex items-center justify-between">
-               <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
+                 <div class="flex items-center justify-between">
+                   <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
                        Rüyayı Yorumla
-                  </button>
-                    <div id="loadingIndicator" class="loading-spinner"></div>
-               </div>
+                   </button>
+                     <div id="loadingIndicator" class="loading-spinner"></div>
+                 </div>
             </form>
             <!-- Interpretation Display Area -->
-           <div id="interpretationResult" class="mt-6">
+            <div id="interpretationResult" class="mt-6">
                <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
-               <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum yapay zeka tarafından sağlanmıştır.</p>
+              <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.</p>
                 <div id="interpretationText" class="interpretation-area text-gray-700">
-                    <!-- Interpretation will be displayed here -->
+                     <!-- Interpretation will be displayed here -->
                 </div>
-          </div>
-     </div>
+            </div>
+      </div>
   </div>
     <!-- JavaScript Code -->
     <script>
@@ -155,8 +157,8 @@
              // Translations
             const translations = {
                     tr: {
-                       "Rüya Yorumlama AI": "Rüya Yorumlama AI",
-                     "keywordLabel": "Rüya anahtar kelimenizi girin:",
+                        "RüyAi": "RüyAi",
+                       "keywordLabel": "Rüya anahtar kelimenizi girin:",
                          "interpretationStyleLabel": "Yorumlama Stilini Seçin:",
                          "religiousLabel": "Dini/Tarihsel",
                        "religiousTooltip": "İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.",
@@ -164,10 +166,10 @@
                          "lifestyleTooltip": "Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.",
                        "interpretButton": "Rüyayı Yorumla",
                         "interpretationHeader": "Yorum:",
-                        "interpretationDisclaimer": "Bu yorum yapay zeka tarafından sağlanmıştır.",
+                         "interpretationDisclaimer": "Bu yorum İslam literatüründe muteber kaynaklar kullanılmıştır.",
                     },
                     en: {
-                         "Rüya Yorumlama AI": "Dream Interpretation AI",
+                         "RüyAi": "RüyAi",
                       "keywordLabel": "Enter your dream keyword:",
                          "interpretationStyleLabel": "Choose Interpretation Style:",
                          "religiousLabel": "Religious/Historical",
@@ -176,10 +178,10 @@
                          "lifestyleTooltip": "Interpretations focusing on daily experiences, personal relationships, and modern lifestyle.",
                          "interpretButton": "Interpret Dream",
                          "interpretationHeader": "Interpretation:",
-                        "interpretationDisclaimer": "This interpretation is provided by an AI.",
+                        "interpretationDisclaimer": "This interpretation uses reputable sources in Islamic literature.",
                      },
                      fr: {
-                         "Rüya Yorumlama AI": "IA d'Interprétation des Rêves",
+                         "RüyAi": "RüyAi",
                          "keywordLabel": "Entrez votre mot-clé de rêve:",
                           "interpretationStyleLabel": "Choisissez le style d'interprétation:",
                         "religiousLabel": "Religieux/Historique",
@@ -188,10 +190,10 @@
                          "lifestyleTooltip": "Interprétations axées sur les expériences quotidiennes, les relations personnelles et le style de vie moderne.",
                           "interpretButton": "Interpréter le Rêve",
                            "interpretationHeader": "Interprétation:",
-                         "interpretationDisclaimer": "Cette interprétation est fournie par une IA.",
+                           "interpretationDisclaimer": "Cette interprétation utilise des sources réputées de la littérature islamique.",
                        },
                         ar: {
-                            "Rüya Yorumlama AI": "الذكاء الاصطناعي لتفسير الأحلام",
+                            "RüyAi": "رؤياي",
                             "keywordLabel": "أدخل الكلمة المفتاحية لحلمك:",
                            "interpretationStyleLabel": "اختر أسلوب التفسير:",
                            "religiousLabel": "ديني/تاريخي",
@@ -200,13 +202,13 @@
                            "lifestyleTooltip": "تفسيرات تركز على التجارب اليومية والعلاقات الشخصية ونمط الحياة الحديث.",
                             "interpretButton": "تفسير الحلم",
                           "interpretationHeader": "التفسير:",
-                          "interpretationDisclaimer": "هذا التفسير مقدم من قبل الذكاء الاصطناعي.",
+                             "interpretationDisclaimer": "يستخدم هذا التفسير مصادر موثوقة في الأدب الإسلامي.",
                       }
                 };
              // Function to apply the language on ui elements
            function applyTranslations() {
                const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
-                document.querySelector('h1').textContent = translations[currentLanguage]["Rüya Yorumlama AI"]
+                document.querySelector('h1').textContent = translations[currentLanguage]["RüyAi"]
                elementsToTranslate.forEach(element => {
                    const key = element.getAttribute('data-translate-key');
                     if (translations[currentLanguage][key]) {
