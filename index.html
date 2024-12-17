@@ -8,115 +8,150 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Custom Styles -->
     <style>
+        body {
+           background-image: url('https://images.unsplash.com/photo-1531342542938-33442059160a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'); /* Replace with your image URL */
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+            min-height: 100vh;
+          display: flex;
+           flex-direction: column;
+          margin: 0;
+           position: relative;
+        }
+       .header-container {
+           position: absolute;
+            top: 0;
+            left: 0;
+           width: 100%;
+           background-color: rgba(0,0,0,0.4)
+         }
         .radio-container {
-           display: flex;
+            display: flex;
             align-items: center;
          }
          .radio-container input[type="radio"] {
-             margin-right: 0.5rem;
-         }
+            margin-right: 0.5rem;
+          }
         .interpretation-area {
-            white-space: pre-line;
-        }
-        .loading-spinner {
+           white-space: pre-line;
+         }
+         .loading-spinner {
             border: 4px solid rgba(0, 0, 0, 0.1);
             border-top: 4px solid #3498db;
-            border-radius: 50%;
+           border-radius: 50%;
             width: 20px;
             height: 20px;
-           animation: spin 1s linear infinite;
-            display: none;
+             animation: spin 1s linear infinite;
+             display: none;
         }
         @keyframes spin {
            0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-       .tooltip {
+         }
+        .tooltip {
             position: relative;
             display: inline-block;
-           cursor: help;
-        }
+             cursor: help;
+         }
         .tooltip .tooltiptext {
-             visibility: hidden;
+            visibility: hidden;
             width: 200px;
-            background-color: #555;
-            color: #fff;
+           background-color: #555;
+             color: #fff;
             text-align: center;
-             padding: 5px;
-             border-radius: 6px;
-           position: absolute;
-            z-index: 1;
+            padding: 5px;
+            border-radius: 6px;
+            position: absolute;
+             z-index: 1;
             bottom: 125%;
-            left: 50%;
-           margin-left: -100px;
-           opacity: 0;
-            transition: opacity 0.3s;
-       }
-
-        .tooltip:hover .tooltiptext {
-            visibility: visible;
-           opacity: 1;
+             left: 50%;
+             margin-left: -100px;
+             opacity: 0;
+           transition: opacity 0.3s;
+         }
+         .tooltip:hover .tooltiptext {
+           visibility: visible;
+             opacity: 1;
+         }
+     .content-container {
+            display: flex;
+             flex-direction: column;
+             align-items: center;
+             justify-content: flex-start;
+             min-height: calc(100vh - 4rem);
+           padding: 4rem 0;
+        }
+     .main-content {
+        background-color: rgba(255, 255, 255, 0.85);
+         padding: 2rem;
+            border-radius: 1rem;
+         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+           max-width: 100%;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen mt-4">
-<div class="bg-white p-8 rounded-xl shadow-md w-full max-w-3xl">
-  <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-800">Rüya Yorumlama AI</h1>
-       <select id="language-select" class="bg-gray-700 text-white rounded">
-            <option value="tr">Türkçe</option>
-            <option value="en">English</option>
-           <option value="fr">Français</option>
-            <option value="ar">العربية</option>
-       </select>
-    </div>
-    <!-- Dream Input Form -->
-      <form id="dreamForm" class="mb-6">
-        <div class="mb-4">
-            <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="keywordLabel">Rüya anahtar kelimenizi girin:</label>
-            <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="örn: uçmak, su, yılan" required>
-        </div>
-        <!-- Interpretation Style Selection -->
-        <div class="mb-4">
-            <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
-            <div class="radio-container">
-                <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
-                <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
-                    Dini/Tarihsel
-                    <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
-                </label>
-            </div>
-            <div class="radio-container">
-                <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
-                 <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
-                    Yaşam Tarzına Dayalı
-                   <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
-               </label>
-            </div>
-        </div>
-         <div class="flex items-center justify-between">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
-                Rüyayı Yorumla
-             </button>
-           <div id="loadingIndicator" class="loading-spinner"></div>
-        </div>
-    </form>
-    <!-- Interpretation Display Area -->
-   <div id="interpretationResult" class="mt-6">
-        <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
-        <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum yapay zeka tarafından sağlanmıştır.</p>
-         <div id="interpretationText" class="interpretation-area text-gray-700">
-           <!-- Interpretation will be displayed here -->
-        </div>
-    </div>
-</div>
-<!-- JavaScript Code -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-          const languageSelect = document.getElementById('language-select');
+<body class="bg-gray-100 relative">
+  <div class="header-container p-2  text-white">
+    <div class="container mx-auto flex justify-between items-center">
+        <h1 class="text-xl font-bold">Rüya Yorumlama AI</h1>
+         <select id="language-select" class="bg-gray-700 text-white rounded-lg">
+              <option value="tr">Türkçe</option>
+              <option value="en">English</option>
+             <option value="fr">Français</option>
+             <option value="ar">العربية</option>
+          </select>
+     </div>
+ </div>
+ <div class="content-container">
+        <div class="main-content rounded-lg w-full max-w-3xl">
+            <!-- Dream Input Form -->
+           <form id="dreamForm" class="mb-6">
+              <div class="mb-4">
+                   <label for="dreamKeyword" class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="keywordLabel">Rüya anahtar kelimenizi girin:</label>
+                   <input type="text" id="dreamKeyword" name="dreamKeyword" class="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="örn: uçmak, su, yılan" required>
+              </div>
+                <!-- Interpretation Style Selection -->
+             <div class="mb-4">
+                 <p class="block text-gray-700 text-sm font-bold mb-2" data-translate-key="interpretationStyleLabel">Yorumlama Stilini Seçin:</p>
+                 <div class="radio-container">
+                    <input type="radio" id="religiousRadio" name="interpretationStyle" value="religious" checked>
+                      <label for="religiousRadio" class="text-gray-700 text-sm tooltip" data-translate-key="religiousLabel">
+                         Dini/Tarihsel
+                            <span class="tooltiptext" data-translate-key="religiousTooltip">İbn-i Sirin ve diğer İslami kaynaklara dayalı yorumlar. Ayrıca Hıristiyan ve Musevi metinleri de dahil.</span>
+                     </label>
+                  </div>
+                  <div class="radio-container">
+                     <input type="radio" id="lifestyleRadio" name="interpretationStyle" value="lifestyle">
+                       <label for="lifestyleRadio" class="text-gray-700 text-sm tooltip" data-translate-key="lifestyleLabel">
+                         Yaşam Tarzına Dayalı
+                            <span class="tooltiptext" data-translate-key="lifestyleTooltip">Günlük deneyimlere, kişisel ilişkilere ve modern yaşam tarzına odaklanan yorumlar.</span>
+                        </label>
+                   </div>
+                </div>
+             <div class="flex items-center justify-between">
+               <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline" data-translate-key="interpretButton">
+                       Rüyayı Yorumla
+                  </button>
+                    <div id="loadingIndicator" class="loading-spinner"></div>
+               </div>
+            </form>
+            <!-- Interpretation Display Area -->
+           <div id="interpretationResult" class="mt-6">
+               <h2 class="text-xl font-semibold mb-2 text-gray-800" data-translate-key="interpretationHeader">Yorum:</h2>
+               <p id="interpretationMessage" class="text-gray-500 mb-2 italic" data-translate-key="interpretationDisclaimer">Bu yorum yapay zeka tarafından sağlanmıştır.</p>
+                <div id="interpretationText" class="interpretation-area text-gray-700">
+                    <!-- Interpretation will be displayed here -->
+                </div>
+          </div>
+     </div>
+  </div>
+    <!-- JavaScript Code -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageSelect = document.getElementById('language-select');
            let currentLanguage = 'tr';
            languageSelect.value = currentLanguage
-
              // Translations
             const translations = {
                     tr: {
@@ -168,58 +203,57 @@
                           "interpretationDisclaimer": "هذا التفسير مقدم من قبل الذكاء الاصطناعي.",
                       }
                 };
-            // Function to apply the language on ui elements
-            function applyTranslations() {
-                const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
-                 document.querySelector('h1').textContent = translations[currentLanguage]["Rüya Yorumlama AI"]
-                elementsToTranslate.forEach(element => {
-                     const key = element.getAttribute('data-translate-key');
-                     if (translations[currentLanguage][key]) {
-                           element.textContent = translations[currentLanguage][key];
-                     }
-                 });
-            }
-        applyTranslations();
-
-
-        // Function to handle form submission
-            document.getElementById('dreamForm').addEventListener('submit', async function (event) {
-                 event.preventDefault();
-                const keyword = document.getElementById('dreamKeyword').value;
-                 const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
-                const loadingIndicator = document.getElementById('loadingIndicator');
-                const interpretationText = document.getElementById('interpretationText');
-               const interpretationMessage = document.getElementById('interpretationMessage');
-                interpretationText.textContent = '';
-                 loadingIndicator.style.display = 'inline-block'; // Show spinner
-                 try {
-                   const response = await fetch('/api/interpret', {
-                       method: 'POST',
-                      headers: {
-                         'Content-Type': 'application/json'
-                         },
-                         body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle, language: currentLanguage })
-                     });
-                    if (!response.ok) {
-                       throw new Error(`HTTP error! Status: ${response.status}`);
+             // Function to apply the language on ui elements
+           function applyTranslations() {
+               const elementsToTranslate = document.querySelectorAll('[data-translate-key]');
+                document.querySelector('h1').textContent = translations[currentLanguage]["Rüya Yorumlama AI"]
+               elementsToTranslate.forEach(element => {
+                   const key = element.getAttribute('data-translate-key');
+                    if (translations[currentLanguage][key]) {
+                       element.textContent = translations[currentLanguage][key];
                     }
+                });
+            }
+         applyTranslations();
+            // Function to handle form submission
+          document.getElementById('dreamForm').addEventListener('submit', async function (event) {
+               event.preventDefault();
+             const keyword = document.getElementById('dreamKeyword').value;
+               const interpretationStyle = document.querySelector('input[name="interpretationStyle"]:checked').value;
+              const loadingIndicator = document.getElementById('loadingIndicator');
+             const interpretationText = document.getElementById('interpretationText');
+              const interpretationMessage = document.getElementById('interpretationMessage');
+              interpretationText.textContent = '';
+             loadingIndicator.style.display = 'inline-block'; // Show spinner
+              try {
+                   const response = await fetch('/api/interpret', {
+                        method: 'POST',
+                      headers: {
+                           'Content-Type': 'application/json'
+                       },
+                        body: JSON.stringify({ keyword: keyword, interpretationStyle: interpretationStyle, language: currentLanguage })
+                   });
+                     if (!response.ok) {
+                         throw new Error(`HTTP error! Status: ${response.status}`);
+                   }
                     const data = await response.json();
                     //Update the interpretation result
-                      interpretationText.textContent = data.interpretation;
-                 } catch (error) {
-                    console.error('Error:', error);
+                   interpretationText.textContent = data.interpretation.replace(/\*\*/g, ''); // Remove bolding **
+
+               } catch (error) {
+                 console.error('Error:', error);
                   interpretationText.textContent = "Rüya yorumu alınırken bir hata oluştu.";
-                    interpretationMessage.textContent = "Hata: " + error.message;
-                } finally {
-                  loadingIndicator.style.display = 'none'; // Hide spinner
-                 }
-            });
-            // language selector
+                   interpretationMessage.textContent = "Hata: " + error.message;
+               } finally {
+                   loadingIndicator.style.display = 'none'; // Hide spinner
+              }
+          });
+       // language selector
         languageSelect.addEventListener('change', () => {
-                currentLanguage = languageSelect.value;
-                 applyTranslations();
-        })
-      });
+               currentLanguage = languageSelect.value;
+              applyTranslations();
+      })
+       });
     </script>
 </body>
 </html>
